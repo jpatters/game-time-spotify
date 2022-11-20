@@ -11,10 +11,14 @@ export default function Home({
 }: {
   playlists: SpotifyApi.PlaylistObjectSimplified[];
 }) {
-  const { player, deviceId, isLoading } = useSpotifyDevice();
+  const { player, deviceId, isLoading, isError, error } = useSpotifyDevice();
 
   if (isLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error: {error}</div>;
   }
 
   return (
