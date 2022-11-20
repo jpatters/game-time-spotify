@@ -1,12 +1,12 @@
 import Head from "next/head";
+import { useSpotifyDevice } from "../../components/hooks/spotify";
 import { default as SpotifySDK } from "spotify-web-api-node";
 import { unstable_getServerSession } from "next-auth/next";
 import { GetServerSideProps } from "next";
-import { authOptions } from "../auth-config";
-import { useSpotifyDevice } from "../components/hooks/spotify";
-import Playlists from "../components/Playlists";
+import { authOptions } from "../../auth-config";
+import Songs from "../../components/Songs";
 
-export default function Home({ playlists }) {
+export default function Playlist({ songs }) {
   const { player, deviceId, isLoading } = useSpotifyDevice();
 
   if (isLoading) {
@@ -20,7 +20,7 @@ export default function Home({ playlists }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Playlists playlists={playlists} />
+        <Songs songs={songs} player={player} deviceId={deviceId} />
       </main>
     </div>
   );
@@ -38,11 +38,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   var spotifyApi = new SpotifySDK({ accessToken: session.accessToken });
+
   try {
-    const response = await spotifyApi.getUserPlaylists();
+    const response = await spotifyApi.getPlaylist(context.params.id);
     return {
       props: {
-        playlists: response.body.items,
+        songs: response.body.tracks.items,
       },
     };
   } catch (error) {
