@@ -43,14 +43,14 @@ export const SpotifyPlayer = ({ children }: { children: React.ReactNode }) => {
         }
       );
 
-      spotifyPlayer.addListener(
-        "player_state_changed",
-        ({ position, duration, track_window: { current_track } }: any) => {
-          console.log("Currently Playing", current_track);
-          console.log("Position in Song", position);
-          console.log("Duration of Song", duration);
-        }
-      );
+      // spotifyPlayer.addListener(
+      //   "player_state_changed",
+      //   ({ position, duration, track_window: { current_track } }: any) => {
+      //     console.log("Currently Playing", current_track);
+      //     console.log("Position in Song", position);
+      //     console.log("Duration of Song", duration);
+      //   }
+      // );
 
       spotifyPlayer.addListener(
         "not_ready",
