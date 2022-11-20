@@ -58,6 +58,7 @@ export const SpotifyPlayer = ({ children }: { children: React.ReactNode }) => {
           console.log("Device ID has gone offline", device_id);
           setDeviceId(deviceId);
           setIsError(true);
+          setIsLoading(false);
           setError("Device ID has gone offline");
         }
       );
@@ -65,6 +66,7 @@ export const SpotifyPlayer = ({ children }: { children: React.ReactNode }) => {
       spotifyPlayer.addListener(
         "initialization_error",
         ({ message }: { message: string }) => {
+          setIsLoading(false);
           setIsError(true);
           setError(message);
         }
@@ -73,6 +75,7 @@ export const SpotifyPlayer = ({ children }: { children: React.ReactNode }) => {
       spotifyPlayer.addListener(
         "authentication_error",
         ({ message }: { message: string }) => {
+          setIsLoading(false);
           setIsError(true);
           setError(message);
         }
@@ -81,6 +84,7 @@ export const SpotifyPlayer = ({ children }: { children: React.ReactNode }) => {
       spotifyPlayer.addListener(
         "account_error",
         ({ message }: { message: string }) => {
+          setIsLoading(false);
           setIsError(true);
           setError(message);
         }
