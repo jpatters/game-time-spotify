@@ -92,7 +92,7 @@ export const SpotifyPlayer = ({ children }: { children: React.ReactNode }) => {
 
       spotifyPlayer.connect();
     };
-  });
+  }, [session]);
 
   const spotifyContext = {
     deviceId,
