@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["*.scdn.co"],
+    domains: ["i.scdn.co", "mosaic.scdn.co", "seeded-session-images.scdn.co"],
   },
 };
 
