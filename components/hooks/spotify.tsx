@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import { createContext, useContext, useEffect } from "react";
 import React, { useState } from "react";
+import Script from "next/script";
 
 type SContext = {
   player: any;
@@ -13,7 +14,7 @@ type SContext = {
 const SpotifyContext = createContext<SContext>({} as SContext);
 
 export const SpotifyPlayer = ({ children }: { children: React.ReactNode }) => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const [deviceId, setDeviceId] = useState<string | undefined>(undefined);
   const [player, setPlayer] = useState();
@@ -26,8 +27,6 @@ export const SpotifyPlayer = ({ children }: { children: React.ReactNode }) => {
       console.log("here");
       return;
     }
-
-    console.log(session.accessToken);
 
     // @ts-ignore
     window.onSpotifyWebPlaybackSDKReady = () => {
@@ -109,8 +108,13 @@ export const SpotifyPlayer = ({ children }: { children: React.ReactNode }) => {
     error,
   };
 
+  if (!session) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <SpotifyContext.Provider value={spotifyContext}>
+      <Script src="https://sdk.scdn.co/spotify-player.js" />
       {children}
     </SpotifyContext.Provider>
   );
