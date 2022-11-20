@@ -17,6 +17,10 @@ export default function Playlist({
     return <div>Loading...</div>;
   }
 
+  if (!deviceId) {
+    return <div>Device not found</div>;
+  }
+
   return (
     <div>
       <Head>
