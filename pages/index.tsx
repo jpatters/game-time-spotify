@@ -6,7 +6,11 @@ import { authOptions } from "../auth-config";
 import { useSpotifyDevice } from "../components/hooks/spotify";
 import Playlists from "../components/Playlists";
 
-export default function Home({ playlists }: any) {
+export default function Home({
+  playlists,
+}: {
+  playlists: SpotifyApi.PlaylistObjectSimplified[];
+}) {
   const { player, deviceId, isLoading } = useSpotifyDevice();
 
   if (isLoading) {

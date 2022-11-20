@@ -14,7 +14,15 @@ const play = ({ player, spotify_uri, deviceId, position }: any) => {
   });
 };
 
-const Songs = ({ songs, player, deviceId }: any) => {
+const Songs = ({
+  songs,
+  player,
+  deviceId,
+}: {
+  songs: SpotifyApi.PlaylistTrackObject[];
+  player: any;
+  deviceId: string;
+}) => {
   const [currentSong, setCurrentSong] = useState<string>("");
 
   const playSong = (id: string, position: number) => {
@@ -35,9 +43,9 @@ const Songs = ({ songs, player, deviceId }: any) => {
   return (
     <div className="overflow-hidden bg-white shadow sm:rounded-md h-full">
       <ul role="list" className="divide-y divide-gray-200">
-        {songs.map((song: any) => (
+        {songs.map((song: SpotifyApi.PlaylistTrackObject) => (
           <Song
-            key={song.id}
+            key={song.track!.uri}
             song={song}
             playSong={playSong}
             stopSong={stopSong}

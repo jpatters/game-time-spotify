@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRef } from "react";
 
 interface Props {
-  song: any;
+  song: SpotifyApi.PlaylistTrackObject;
   currentSong: string;
   playSong: (id: string, position: number) => void;
   stopSong: () => void;
@@ -14,7 +14,7 @@ const Song = ({ song, currentSong, playSong, stopSong }: Props) => {
 
   const play = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
-    if (currentSong !== song.track.uri) {
+    if (currentSong !== song.track!.uri) {
       let position: number;
       if (inputRef.current) {
         const p = inputRef.current.value;
@@ -32,20 +32,22 @@ const Song = ({ song, currentSong, playSong, stopSong }: Props) => {
         position = 0;
       }
 
-      console.log(position);
-
-      playSong(song.track.uri, position || 0);
+      playSong(song.track!.uri, position || 0);
     } else {
       stopSong();
     }
   };
+
+  if (!song.track) {
+    return <></>;
+  }
 
   return (
     <li>
       <div className="block hover:bg-gray-50">
         <div className="flex items-center px-4 py-4 sm:px-6">
           <div className="flex min-w-0 flex-1 items-center">
-            {song.track.album.images && (
+            {song.track!.album.images && (
               <div className="flex-shrink-0">
                 <Image
                   className="h-12 w-12 rounded-full"

@@ -6,7 +6,11 @@ import { GetServerSideProps } from "next";
 import { authOptions } from "../../auth-config";
 import Songs from "../../components/Songs";
 
-export default function Playlist({ songs }: any) {
+export default function Playlist({
+  songs,
+}: {
+  songs: SpotifyApi.PlaylistTrackObject[];
+}) {
   const { player, deviceId, isLoading } = useSpotifyDevice();
 
   if (isLoading) {

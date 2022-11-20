@@ -1,11 +1,16 @@
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
+import Image from "next/image";
 
-const Playlists = ({ playlists }: any) => {
+const Playlists = ({
+  playlists,
+}: {
+  playlists: SpotifyApi.PlaylistObjectSimplified[];
+}) => {
   return (
     <div className="overflow-hidden bg-white shadow sm:rounded-md h-full">
       <ul role="list" className="divide-y divide-gray-200">
-        {playlists.map((playlist: any) => (
+        {playlists.map((playlist: SpotifyApi.PlaylistObjectSimplified) => (
           <li key={playlist.uri}>
             <Link
               href={`/playlist/${playlist.id}`}
@@ -15,10 +20,12 @@ const Playlists = ({ playlists }: any) => {
                 <div className="flex min-w-0 flex-1 items-center">
                   {playlist.images && (
                     <div className="flex-shrink-0">
-                      <img
+                      <Image
                         className="h-12 w-12 rounded-full"
                         src={playlist.images[0].url}
                         alt=""
+                        width={48}
+                        height={48}
                       />
                     </div>
                   )}
