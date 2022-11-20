@@ -22,13 +22,20 @@ export const SpotifyPlayer = ({ children }: { children: React.ReactNode }) => {
   const [error, setError] = useState<string | undefined>(undefined);
 
   useEffect(() => {
+    if (!session) {
+      console.log("here");
+      return;
+    }
+
+    console.log(session.accessToken);
+
     // @ts-ignore
     window.onSpotifyWebPlaybackSDKReady = () => {
       // @ts-ignore
       const spotifyPlayer = new Spotify.Player({
         name: "Web Playback SDK Quick Start Player",
         getOAuthToken: (cb: (token: string | undefined) => void) => {
-          cb(session?.accessToken);
+          cb(session.accessToken);
         },
         volume: 0.5,
       });
