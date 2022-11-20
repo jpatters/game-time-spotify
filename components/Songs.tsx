@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Song from "./Song";
 
-const play = ({ player, spotify_uri, deviceId, position }) => {
-  player._options.getOAuthToken((access_token) => {
+const play = ({ player, spotify_uri, deviceId, position }: any) => {
+  player._options.getOAuthToken((access_token: string) => {
     fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
       method: "PUT",
       body: JSON.stringify({ uris: [spotify_uri], position_ms: position }),
@@ -14,10 +14,10 @@ const play = ({ player, spotify_uri, deviceId, position }) => {
   });
 };
 
-const Songs = ({ songs, player, deviceId }) => {
+const Songs = ({ songs, player, deviceId }: any) => {
   const [currentSong, setCurrentSong] = useState<string>("");
 
-  const playSong = (id, position) => {
+  const playSong = (id: string, position: number) => {
     setCurrentSong(id);
     play({
       player,
@@ -35,7 +35,7 @@ const Songs = ({ songs, player, deviceId }) => {
   return (
     <div className="overflow-hidden bg-white shadow sm:rounded-md h-full">
       <ul role="list" className="divide-y divide-gray-200">
-        {songs.map((song) => (
+        {songs.map((song: any) => (
           <Song
             key={song.id}
             song={song}

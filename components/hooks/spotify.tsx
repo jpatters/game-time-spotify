@@ -22,7 +22,9 @@ export const SpotifyPlayer = ({ children }: { children: React.ReactNode }) => {
   const [error, setError] = useState<string | undefined>(undefined);
 
   useEffect(() => {
+    // @ts-ignore
     window.onSpotifyWebPlaybackSDKReady = () => {
+      // @ts-ignore
       const spotifyPlayer = new Spotify.Player({
         name: "Web Playback SDK Quick Start Player",
         getOAuthToken: (cb: (token: string | undefined) => void) => {
@@ -43,7 +45,7 @@ export const SpotifyPlayer = ({ children }: { children: React.ReactNode }) => {
 
       spotifyPlayer.addListener(
         "player_state_changed",
-        ({ position, duration, track_window: { current_track } }) => {
+        ({ position, duration, track_window: { current_track } }: any) => {
           console.log("Currently Playing", current_track);
           console.log("Position in Song", position);
           console.log("Duration of Song", duration);

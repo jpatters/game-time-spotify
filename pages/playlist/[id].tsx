@@ -6,7 +6,7 @@ import { GetServerSideProps } from "next";
 import { authOptions } from "../../auth-config";
 import Songs from "../../components/Songs";
 
-export default function Playlist({ songs }) {
+export default function Playlist({ songs }: any) {
   const { player, deviceId, isLoading } = useSpotifyDevice();
 
   if (isLoading) {
@@ -33,14 +33,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     authOptions
   );
 
-  if (!session) {
+  if (!session || !context.params || !context.params.id) {
     return { props: {} };
   }
 
   var spotifyApi = new SpotifySDK({ accessToken: session.accessToken });
 
+  let songId = context.params.id as string;
+
   try {
-    const response = await spotifyApi.getPlaylist(context.params.id);
+    const response = await spotifyApi.getPlaylist(songId);
     return {
       props: {
         songs: response.body.tracks.items,
