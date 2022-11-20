@@ -13,8 +13,10 @@
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
+    "@upstash/redis": "^1.16.1",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.4",
+    "lodash.debounce": "^4.0.8",
     "next": "13.0.4",
     "next-auth": "^4.16.4",
     "react": "18.2.0",
@@ -23,6 +25,7 @@
     "typescript": "4.9.3"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.7",
     "@types/spotify-web-api-node": "^5.0.7",
     "autoprefixer": "^10.4.13",
     "eslint-config-prettier": "^8.5.0",

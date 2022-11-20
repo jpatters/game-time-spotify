@@ -1,6 +1,7 @@
 import { PlayIcon, StopIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
+import debounce from "lodash.debounce";
 
 interface Props {
   song: SpotifyApi.PlaylistTrackObject;
@@ -37,6 +38,41 @@ const Song = ({ song, currentSong, playSong, stopSong }: Props) => {
       stopSong();
     }
   };
+
+  const updatePosition = async () => {
+    if (inputRef.current) {
+      await fetch("/api/song/update", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          songId: song.track!.uri,
+          startPosition: inputRef.current.value,
+        }),
+      });
+    }
+  };
+
+  const debouncedChangeHandler = useMemo(
+    () => debounce(updatePosition, 1000),
+    []
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedChangeHandler.cancel();
+    };
+  });
+
+  useEffect(() => {
+    async function getPosition() {
+      const res = await fetch(`/api/song/${song.track!.uri}`);
+      const data = await res.json();
+      if (inputRef.current) {
+        inputRef.current.value = data.startPosition;
+      }
+    }
+    getPosition();
+  }, [song]);
 
   if (!song.track) {
     return <></>;
@@ -94,6 +130,7 @@ const Song = ({ song, currentSong, playSong, stopSong }: Props) => {
                       id={song.track.id}
                       type="text"
                       defaultValue="0"
+                      onChange={debouncedChangeHandler}
                     />
                   </p>
                 </div>
