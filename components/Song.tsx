@@ -8,13 +8,15 @@ interface Props {
   currentSong: string;
   playSong: (id: string, position: number) => void;
   stopSong: () => void;
+  player: any;
 }
 
-const Song = ({ song, currentSong, playSong, stopSong }: Props) => {
+const Song = ({ song, currentSong, playSong, stopSong, player }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const play = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
+    player.activateElement();
     if (currentSong !== song.track!.uri) {
       let position: number;
       if (inputRef.current) {

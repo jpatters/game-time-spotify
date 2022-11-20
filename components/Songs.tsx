@@ -50,6 +50,7 @@ const Songs = ({
             playSong={playSong}
             stopSong={stopSong}
             currentSong={currentSong}
+            player={player}
           />
         ))}
       </ul>
